@@ -6,6 +6,8 @@ PRE should not be interpreted as discovering a new physiological relationship. R
 
 This repository corresponds to the `v0.7-frozen` release.
 
+Archived release DOI: [10.5281/zenodo.21267822](https://doi.org/10.5281/zenodo.21267822)
+
 ## Repository structure
 
 ```text
