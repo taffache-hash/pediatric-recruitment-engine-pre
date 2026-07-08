@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "Pediatric Recruitment Engine (PRE) v0.7"
+authors:
+  - name: "taffache-hash"
+version: "0.7.0"
+date-released: "2026-07-08"
+license: "Apache-2.0"
+repository-code: "https://github.com/taffache-hash/pediatric-recruitment-engine-pre"
+abstract: "A conceptual and educational computational model for exploring pediatric lung recruitment physiology, hysteresis, and competing PEEP targets."

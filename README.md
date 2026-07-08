@@ -62,4 +62,4 @@ The parameter and assumption justification table is provided in both DOCX and CS
 
 ## License
 
-No license has been assigned yet. Add a license before public release if reuse terms should be explicit.
+This project is licensed under the Apache License 2.0. See `LICENSE`.
