@@ -1,7 +1,5 @@
 
 from pathlib import Path
-import csv
-import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,8 +7,8 @@ import matplotlib.pyplot as plt
 from pre_engine_v07 import Patient, simulate_protocol, scalarize_rows, identify_targets, extract_map
 
 OUT = Path("outputs")
-FIG = OUT / "figures"
-DATA = OUT / "data"
+FIG = Path("figures")
+DATA = OUT
 FIG.mkdir(parents=True, exist_ok=True)
 DATA.mkdir(parents=True, exist_ok=True)
 
@@ -22,14 +20,6 @@ SEVERITY_PATIENTS = [
     Patient(age_years=2.0, weight_kg=12.0, label="severe_2y", severity="severe"),
 ]
 PENALTIES = [1.0, 1.65, 2.5]
-
-def save_csv(rows, path):
-    if not rows:
-        return
-    with path.open("w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
-        writer.writeheader()
-        writer.writerows(rows)
 
 def save_fig(filename):
     plt.tight_layout()
@@ -63,7 +53,6 @@ def plot_desc_multi(df, metrics, ylabel, title, filename):
 # Primary, default penalty
 primary_rows = simulate_protocol(PRIMARY, seed=111, overdistension_penalty=1.65)
 primary_scalar = scalarize_rows(primary_rows)
-save_csv(primary_scalar, DATA / "v07_primary_scalar_default_penalty.csv")
 primary_df = pd.DataFrame(primary_scalar)
 primary_targets = {"scenario": PRIMARY.label, "penalty": 1.65, **identify_targets(primary_rows)}
 pd.DataFrame([primary_targets]).to_csv(DATA / "v07_primary_targets_default_penalty.csv", index=False)
@@ -72,7 +61,6 @@ pd.DataFrame([primary_targets]).to_csv(DATA / "v07_primary_targets_default_penal
 penalty_rows = []
 for penalty in PENALTIES:
     rows = simulate_protocol(PRIMARY, seed=111, overdistension_penalty=penalty)
-    save_csv(scalarize_rows(rows), DATA / f"v07_primary_scalar_penalty_{str(penalty).replace('.','_')}.csv")
     penalty_rows.append({"scenario": PRIMARY.label, "penalty": penalty, **identify_targets(rows)})
 penalty_df = pd.DataFrame(penalty_rows)
 penalty_df.to_csv(DATA / "v07_balance_penalty_sensitivity.csv", index=False)
@@ -81,7 +69,6 @@ penalty_df.to_csv(DATA / "v07_balance_penalty_sensitivity.csv", index=False)
 severity_rows = []
 for p in SEVERITY_PATIENTS:
     rows = simulate_protocol(p, seed=121, overdistension_penalty=1.65)
-    save_csv(scalarize_rows(rows), DATA / f"v07_{p.label}_scalar.csv")
     severity_rows.append({"scenario": p.label, "severity": p.severity, **identify_targets(rows)})
 severity_df = pd.DataFrame(severity_rows)
 severity_df.to_csv(DATA / "v07_severity_targets.csv", index=False)
@@ -165,7 +152,6 @@ plt.title("Time-dependent derecruitment sensitivity")
 plt.grid(True, alpha=0.25)
 save_fig("Figure_v07_07_derecruitment_sensitivity.png")
 
-# Summary JSON
 summary = {
     "primary_targets": primary_targets,
     "validation_passed": int(test_df["passed"].sum()),
@@ -173,7 +159,6 @@ summary = {
     "penalty_sensitivity": penalty_df.to_dict(orient="records"),
     "severity_targets": severity_df.to_dict(orient="records"),
 }
-(DATA / "v07_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
 print("PRE v0.7 refined engine run complete.")
 print("Validation:", int(test_df["passed"].sum()), "/", len(test_df))

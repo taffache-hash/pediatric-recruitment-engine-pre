@@ -1,28 +1,43 @@
 # Pediatric Recruitment Engine (PRE) v0.7
 
-This repository contains the frozen source code and generated outputs for the Pediatric Recruitment Engine (PRE), a conceptual and educational computational model for exploring pediatric lung recruitment physiology, hysteresis, and competing PEEP targets.
+PRE v0.7 is a frozen educational and research simulator of pediatric lung recruitment during PEEP titration. It is not clinical decision-support software, does not predict patient-specific optimal PEEP, and must not be used to guide ventilator settings.
 
 PRE should not be interpreted as discovering a new physiological relationship. Rather, it provides an inspectable computational representation of established qualitative physiology and allows users to explore how explicit assumptions shape competing PEEP targets.
+
+This repository corresponds to the `v0.7-frozen` release.
 
 ## Repository structure
 
 ```text
+README.md
+LICENSE
+CITATION.cff
+requirements.txt
+
 code/
   pre_engine_v07.py
   run_pre_v07.py
-
-outputs/
-  data/
-    Generated CSV and JSON outputs.
-  figures/
-    Generated figure files.
 
 manuscript_supplement/
   Supplementary_Methods_S1_PRE_v08.docx
   Parameter_Assumption_Justification_PRE_v08.docx
   Parameter_Assumption_Justification_PRE_v08.csv
 
-requirements.txt
+outputs/
+  v07_primary_targets_default_penalty.csv
+  v07_balance_penalty_sensitivity.csv
+  v07_severity_targets.csv
+  v07_time_dependent_derecruitment_sensitivity.csv
+  v07_validation_checks.csv
+
+figures/
+  Figure_v07_01_recruitment_hysteresis.png
+  Figure_v07_02_co2_clearance_hysteresis.png
+  Figure_v07_03_co2_retention_risk.png
+  Figure_v07_04_gas_exchange_tradeoff.png
+  Figure_v07_05_balance_penalty_sensitivity.png
+  Figure_v07_06_severity_targets.png
+  Figure_v07_07_derecruitment_sensitivity.png
 ```
 
 ## Reproducing the outputs
@@ -44,8 +59,8 @@ py code/run_pre_v07.py
 The script writes regenerated CSV files and figures to:
 
 ```text
-outputs/data/
-outputs/figures/
+outputs/
+figures/
 ```
 
 ## Important interpretation note
