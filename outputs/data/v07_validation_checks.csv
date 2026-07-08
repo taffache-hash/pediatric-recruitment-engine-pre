@@ -1,0 +1,11 @@
+test_id,category,description,passed,observed_value,criterion
+V07-T01,code,No NaN in scalar outputs,True,,No numeric NaN
+V07-T02,face,Recruitment increases with PEEP,True,0.000->0.994,High PEEP > low PEEP
+V07-T03,face,Collapse decreases with PEEP,True,1.000->0.006,High PEEP < low PEEP
+V07-T04,face,Overdistension increases with high PEEP,True,0.000->0.313,High PEEP > low PEEP
+V07-T05,construct,Time-dependent hysteresis gives matched-PEEP memory effect,True,0.591,>0.05
+V07-T06,construct,CO2 clearance is nonmonotonic and peaks away from highest PEEP,True,peak PEEP 16,< maximum tested PEEP
+V07-T07,construct,Oxygenation target remains above regional balance target,True,O2=24.0; balance=16.0,O2 PEEP > regional balance PEEP
+V07-T08,robustness,Regional balance target remains below oxygenation across all balance penalties,True,"[(1.0, 16.0, 24.0), (1.65, 16.0, 24.0), (2.5, 16.0, 24.0)]",All penalty settings
+V07-T09,robustness,Gas-exchange balance target does not default to highest PEEP,True,16.0,< 24
+V07-T10,construct,Severity increases regional-balance PEEP,True,"[12.0, 14.0, 16.0, 16.0]",nondecreasing
